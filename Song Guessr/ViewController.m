@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *choices;
 @property (nonatomic, strong) MPMusicPlayerController *player;
+@property (nonatomic) int correctIndex;
 
 @end
 
@@ -31,17 +32,48 @@
         //button.titleLabel.text = self.player.nowPlayingItem.title;
         [button setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
     }
+    NSMutableArray *tmpButtonHolder = [NSMutableArray arrayWithArray:self.choices];
+    self.correctIndex = rand() % 4;
+    UIButton *correctbutton = tmpButtonHolder[self.correctIndex];
+    [tmpButtonHolder removeObjectAtIndex:self.correctIndex];
+    [correctbutton setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
+    
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     NSString *artist = self.player.nowPlayingItem.artist;
     if (!artist)
         artist = @"";
-    [query addFilterPredicate: [MPMediaPropertyPredicate
-                                predicateWithValue: artist
-                                forProperty: MPMediaItemPropertyArtist]];
+    //NSString *songname = self.player.nowPlayingItem.title;
+    //if (!songname)
+    //    songname = @"";
+    //else
+    //    songname = [songname substringToIndex:1];
+    //[query addFilterPredicate: [MPMediaPropertyPredicate
+      //                          predicateWithValue: artist
+        //                        forProperty: MPMediaItemPropertyArtist]];
+    else
+        [query addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyAlbumArtist]];
     // Sets the grouping type for the media query
     [query setGroupingType: MPMediaGroupingAlbum];
     
+    
     NSArray *albums = [query collections];
+    if ([albums count] < 3 && artist) {
+        [query removeFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyArtist]];
+        query = [[MPMediaQuery alloc]init];
+        [query setGroupingType:MPMediaGroupingAlbum];
+        albums = [query collections];
+    }
+    for (int i = 0; i < 3; i++) {
+        int index = rand() % [albums count];
+        MPMediaItemCollection *album = albums[index];
+        NSArray *songs = [album items];
+        index = rand() % [songs count];
+        MPMediaItem *song = songs[index];
+        NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
+        [tmpButtonHolder[i] setTitle:songTitle forState:UIControlStateNormal];
+    }
+    
+    /*
     for (MPMediaItemCollection *album in albums) {
         MPMediaItem *representativeItem = [album representativeItem];
         NSString *artistName =
@@ -56,7 +88,7 @@
             [song valueForProperty: MPMediaItemPropertyTitle];
             NSLog (@"\t\t%@", songTitle);
         }
-    }
+    }*/
 
     
 }
