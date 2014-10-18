@@ -16,8 +16,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Bbq-za-4Dx">
-                                <rect key="frame" x="117" y="164" width="111" height="111"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Bbq-za-4Dx">
+                                <rect key="frame" x="70" y="65" width="226" height="226"/>
+                                <color key="backgroundColor" red="1" green="0.98138336839999996" blue="0.9518036111" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -25,17 +26,9 @@
                                     <action selector="choiceSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qUl-CE-WrN"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2IW-Pj-KMB">
-                                <rect key="frame" x="236" y="164" width="111" height="111"/>
-                                <state key="normal" title="2">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="choiceSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="YVn-LX-sIJ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="tCa-rJ-3Hj">
-                                <rect key="frame" x="117" y="283" width="111" height="111"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="tCa-rJ-3Hj">
+                                <rect key="frame" x="70" y="304" width="226" height="226"/>
+                                <color key="backgroundColor" red="1" green="0.98138336839999996" blue="0.9518036111" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="3">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -43,8 +36,9 @@
                                     <action selector="choiceSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="NsK-EH-IVS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="wTP-9r-leg">
-                                <rect key="frame" x="236" y="283" width="111" height="111"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="wTP-9r-leg">
+                                <rect key="frame" x="304" y="304" width="226" height="226"/>
+                                <color key="backgroundColor" red="1" green="0.98138336839999996" blue="0.9518036111" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="4">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -52,8 +46,28 @@
                                     <action selector="choiceSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="I5t-ou-F6s"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2IW-Pj-KMB">
+                                <rect key="frame" x="304" y="65" width="226" height="226"/>
+                                <color key="backgroundColor" red="1" green="0.98138336839999996" blue="0.9518036111" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="choiceSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="YVn-LX-sIJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="tCa-rJ-3Hj" secondAttribute="centerX" constant="117" id="0Yr-dj-5E7"/>
+                            <constraint firstItem="Bbq-za-4Dx" firstAttribute="width" secondItem="2IW-Pj-KMB" secondAttribute="width" id="6C0-N7-JE8"/>
+                            <constraint firstAttribute="centerX" secondItem="Bbq-za-4Dx" secondAttribute="centerX" constant="117" id="DxN-vO-wnI"/>
+                            <constraint firstItem="wTP-9r-leg" firstAttribute="width" secondItem="tCa-rJ-3Hj" secondAttribute="width" id="ebB-OU-gjv"/>
+                            <constraint firstAttribute="centerX" secondItem="2IW-Pj-KMB" secondAttribute="centerX" constant="-117" id="kma-0w-XBu"/>
+                            <constraint firstAttribute="centerX" secondItem="wTP-9r-leg" secondAttribute="centerX" constant="-117" id="pQY-5o-X3Q"/>
+                            <constraint firstItem="Bbq-za-4Dx" firstAttribute="width" secondItem="2IW-Pj-KMB" secondAttribute="width" id="rOH-6A-fNS"/>
+                            <constraint firstItem="wTP-9r-leg" firstAttribute="width" secondItem="tCa-rJ-3Hj" secondAttribute="width" id="xhS-Om-QZI"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outletCollection property="choices" destination="Bbq-za-4Dx" id="W4O-ca-n0V"/>
@@ -64,6 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="107" y="457"/>
         </scene>
     </scenes>
 </document>
