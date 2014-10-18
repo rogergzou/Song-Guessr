@@ -168,6 +168,7 @@
 				TargetAttributes = {
 					DBDB9E5C19F2E7BA0046DDC7 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = 8TKRWQTPVP;
 					};
 					DBDB9E7519F2E7BA0046DDC7 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -343,6 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Song Guessr/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,6 +355,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Song Guessr/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -412,6 +415,7 @@
 				DBDB9E8219F2E7BA0046DDC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DBDB9E8319F2E7BA0046DDC7 /* Build configuration list for PBXNativeTarget "Song GuessrTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +424,7 @@
 				DBDB9E8519F2E7BA0046DDC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
