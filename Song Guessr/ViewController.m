@@ -22,22 +22,46 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
     self.player = [MPMusicPlayerController systemMusicPlayer];
+
+    //set listen to notifs
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    [notificationCenter
+     addObserver: self
+     selector:    @selector (handle_NowPlayingItemChanged:)
+     name:        MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+     object:      self.player];
+    
+    [notificationCenter
+     addObserver: self
+     selector:    @selector (handle_PlaybackStateChanged:)
+     name:        MPMusicPlayerControllerPlaybackStateDidChangeNotification
+     object:      self.player];
+    
+    [self.player beginGeneratingPlaybackNotifications];
+    
     //self.mybutt.titleLabel.text = @"blah";
     [self updateUI];
 }
 
+
 - (void)updateUI {
-    for (UIButton *button in self.choices) {
+
+    //for (UIButton *button in self.choices) {
         //button.titleLabel.text = self.player.nowPlayingItem.title;
-        [button setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
-    }
+        //[button setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
+    //}
+    
+    //set correct choice randomly, then remove from choices
     NSMutableArray *tmpButtonHolder = [NSMutableArray arrayWithArray:self.choices];
     self.correctIndex = rand() % 4;
     UIButton *correctbutton = tmpButtonHolder[self.correctIndex];
     [tmpButtonHolder removeObjectAtIndex:self.correctIndex];
     [correctbutton setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
     
+    //set incorrect choices by artist or randomly. filter
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     NSString *artist = self.player.nowPlayingItem.artist;
     if (!artist)
@@ -57,12 +81,17 @@
     
     
     NSArray *albums = [query collections];
+
     if ([albums count] < 3 && artist) {
+        //not enough things in album, set random others
+        //later change so it gets some from album + random others
         [query removeFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyArtist]];
         query = [[MPMediaQuery alloc]init];
         [query setGroupingType:MPMediaGroupingAlbum];
         albums = [query collections];
     }
+    
+    //set wrong buttons randomly of choices
     for (int i = 0; i < 3; i++) {
         int index = rand() % [albums count];
         MPMediaItemCollection *album = albums[index];
@@ -90,7 +119,6 @@
         }
     }*/
 
-    
 }
 
 - (IBAction)choiceSelected:(UIButton *)sender {
@@ -110,5 +138,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Handling Changes to Playing
+- (void) handle_NowPlayingItemChanged: (NSNotification *)notification {
+    //song change
+    //reload things
+    
+    [self updateUI];
+}
+
+- (void) handle_PlaybackStateChanged: (NSNotification *) notification {
+    
+}
+
 
 @end
