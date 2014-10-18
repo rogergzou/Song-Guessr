@@ -66,14 +66,18 @@
                             <constraint firstItem="wEG-gK-CXd" firstAttribute="leading" secondItem="u2Q-a8-Wtb" secondAttribute="leading" id="3sd-RE-qc4"/>
                             <constraint firstItem="0Yw-Pi-Mmj" firstAttribute="top" relation="lessThanOrEqual" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="40" id="8BZ-w1-1gK"/>
                             <constraint firstItem="0Yw-Pi-Mmj" firstAttribute="leading" relation="lessThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-7" id="Bie-T9-tHd"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" relation="lessThanOrEqual" secondItem="emO-ic-o3W" secondAttribute="bottom" constant="40" id="EjN-13-Wf6"/>
                             <constraint firstItem="0Yw-Pi-Mmj" firstAttribute="leading" secondItem="emO-ic-o3W" secondAttribute="leading" id="HL4-MC-WYy"/>
                             <constraint firstItem="emO-ic-o3W" firstAttribute="top" secondItem="0Yw-Pi-Mmj" secondAttribute="bottom" constant="17" id="J6Q-Cx-V0k"/>
                             <constraint firstItem="wEG-gK-CXd" firstAttribute="leading" secondItem="emO-ic-o3W" secondAttribute="trailing" constant="8" id="OLi-Da-2Td"/>
                             <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="u2Q-a8-Wtb" secondAttribute="trailing" constant="7" id="UJy-7q-Ae5"/>
                             <constraint firstItem="0Yw-Pi-Mmj" firstAttribute="width" secondItem="u2Q-a8-Wtb" secondAttribute="width" id="ZOb-sq-LrP"/>
+                            <constraint firstItem="0Yw-Pi-Mmj" firstAttribute="height" secondItem="emO-ic-o3W" secondAttribute="height" id="a1d-fp-Kna"/>
+                            <constraint firstItem="wEG-gK-CXd" firstAttribute="height" secondItem="u2Q-a8-Wtb" secondAttribute="height" id="fmy-zB-UGx"/>
                             <constraint firstItem="wEG-gK-CXd" firstAttribute="top" secondItem="u2Q-a8-Wtb" secondAttribute="bottom" constant="17" id="mIA-8A-fGh"/>
                             <constraint firstItem="wEG-gK-CXd" firstAttribute="width" secondItem="u2Q-a8-Wtb" secondAttribute="width" id="pNm-0h-XYJ"/>
                             <constraint firstItem="0Yw-Pi-Mmj" firstAttribute="width" secondItem="emO-ic-o3W" secondAttribute="width" id="r9Z-8h-oHr"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" relation="lessThanOrEqual" secondItem="wEG-gK-CXd" secondAttribute="bottom" constant="40" id="wkM-lf-0PO"/>
                             <constraint firstItem="u2Q-a8-Wtb" firstAttribute="top" relation="lessThanOrEqual" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="40" id="wnx-kf-12E"/>
                             <constraint firstItem="u2Q-a8-Wtb" firstAttribute="leading" secondItem="0Yw-Pi-Mmj" secondAttribute="trailing" constant="8" id="xw7-gr-W0R"/>
                         </constraints>
