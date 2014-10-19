@@ -15,6 +15,7 @@
 @property (nonatomic) unsigned long long misses;
 
 -(void)saveVars;
+-(void)loadVars;
 
 @end
 

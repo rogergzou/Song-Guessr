@@ -173,6 +173,10 @@
     [self.collectionView reloadData];
     
     //update labels
+    [self updateLabels];
+
+}
+- (void)updateLabels {
     self.hitsLabel.text = [NSString stringWithFormat:@"Hits: %llu", self.hits];
     self.missesLabel.text = [NSString stringWithFormat:@"Misses: %llu", self.misses];
     self.pointsLabel.text = [NSString stringWithFormat:@"Points: %lli", self.points];
@@ -195,7 +199,28 @@
     [self updateUI];
 }
 
+- (void)saveVars
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:self.points forKey:@"points"];
+    [defaults setInteger:self.misses forKey:@"misses"];
+    [defaults setInteger:self.hits forKey:@"hits"];
+    [defaults synchronize];
+}
 
+- (void)loadVars
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.points = [defaults integerForKey:@"points"];
+    self.misses = [defaults integerForKey:@"misses"];
+    self.hits = [defaults integerForKey:@"hits"];
+    if (!self.points && !self.misses && self.hits) {
+        self.points = 0;
+        self.misses = 0;
+        self.hits = 0;
+    }
+    [self updateLabels];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -205,7 +230,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    NSLog(@"yep triggered");
+    
     //default apple code https://developer.apple.com/Library/ios/documentation/Audio/Conceptual/iPodLibraryAccess_Guide/UsingMediaPlayback/UsingMediaPlayback.html
     [[NSNotificationCenter defaultCenter]
      removeObserver: self
@@ -219,23 +244,6 @@
     
     [self.player endGeneratingPlaybackNotifications];
 
-}
-
-//lazy instantiations
--(long long)points
-{
-    if (!_points) _points = 0;
-    return _points;
-}
-- (unsigned long long)hits
-{
-    if (!_hits) _hits = 0;
-    return _hits;
-}
-- (unsigned long long)misses
-{
-    if (!_misses) _misses = 0;
-    return _misses;
 }
 
 #pragma mark - Handling Changes to Playing
@@ -264,7 +272,7 @@
         //CGFloat half = collectionView.frame.size.width/2 - collectionView.layoutMargins.left - collectionView.layoutMargins.right - 1;
         //fourCell.frame = CGRectMake(0, 0, half, half);
         
-        [fourCell updateConstraintsIfNeeded];
+        //[fourCell updateConstraintsIfNeeded];
         
         return fourCell;
     }
@@ -273,7 +281,6 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //use choiceSelected:
-    NSLog(@"%@", indexPath);
     [self choiceSelected:indexPath.item];
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
