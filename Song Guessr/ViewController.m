@@ -10,9 +10,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "FourCountCollectionViewCell.h"
 
-@interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *choices;
+//@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *choices;
 @property (nonatomic, strong) MPMusicPlayerController *player;
 @property (nonatomic) int correctIndex;
 @property (nonatomic, strong) NSMutableArray *songArrayForCollectionView;
@@ -184,7 +184,12 @@
         //[fourCell.button setTitle:self.songArrayForCollectionView[indexPath.item] forState:UIControlStateNormal];
         fourCell.songTitle.text = self.songArrayForCollectionView[indexPath.item];
         NSLog(@"%@, index %ld", fourCell.songTitle.text, (long)indexPath.item);
+        
+        //CGFloat half = collectionView.frame.size.width/2 - collectionView.layoutMargins.left - collectionView.layoutMargins.right - 1;
+        //fourCell.frame = CGRectMake(0, 0, half, half);
+        
         [fourCell updateConstraintsIfNeeded];
+        
         return fourCell;
     }
     return cell;
@@ -198,6 +203,25 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 4;
+}
+
+#pragma mark - UICollectionViewFlowLayout
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Adjust cell size for orientation
+    CGFloat half = collectionView.frame.size.width/2 - collectionView.layoutMargins.right/2 -1;
+    if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        return CGSizeMake(half/2, half/2);
+    }
+    return CGSizeMake(half, half);
+    
+    return CGSizeMake(0, 0);
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.collectionView performBatchUpdates:nil completion:nil];
 }
 
 @end
