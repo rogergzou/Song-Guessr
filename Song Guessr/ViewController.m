@@ -15,6 +15,9 @@
 @property (nonatomic, strong) MPMusicPlayerController *player;
 @property (nonatomic) int correctIndex;
 @property (nonatomic, strong) NSMutableArray *songArrayForCollectionView;
+//@property (nonatomic, strong) UIColor *backgroundColor;
+//@property (nonatomic, strong) UIColor *textColor;
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UILabel *pointsLabel;

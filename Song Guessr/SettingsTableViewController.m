@@ -34,7 +34,7 @@
 
 - (NSArray *)firstRowItems
 {
-    if (!_firstRowItems) _firstRowItems = @[@"Use Song Art", @"Background Color", @"Text Color"];
+    if (!_firstRowItems) _firstRowItems = @[@"Use Song Art"];//, @"Background Color", @"Text Color"];
     return _firstRowItems;
 }
 
@@ -53,7 +53,7 @@
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
     if (section == 0) {
-        return 2; //sort section/enabling of images/changing color of background
+        return 1; //sort section/enabling of images/changing color of background
     } else if (section == 1) {
         return 1; //reset button
     }
@@ -90,7 +90,6 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (indexPath.section == 1) {
-        NSLog(@"???");
         [defaults setInteger:0 forKey:@"points"];
         [defaults setInteger:0 forKey:@"hits"];
         [defaults setInteger:0 forKey:@"misses"];
