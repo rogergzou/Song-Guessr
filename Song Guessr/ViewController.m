@@ -36,9 +36,10 @@
     self.player = [MPMusicPlayerController systemMusicPlayer];
     if (!self.player.nowPlayingItem) {
         //nil
-        [self.player play];
+        //[self.player play];
+        //handled in updateUI
     }
-    //set listen to notifs
+    //set listen to notifs. default apple code https://developer.apple.com/Library/ios/documentation/Audio/Conceptual/iPodLibraryAccess_Guide/UsingMediaPlayback/UsingMediaPlayback.html
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     [notificationCenter
@@ -135,6 +136,7 @@
         MPMediaItem *song = songs[index];
         self.player.nowPlayingItem = song;
         [self.player play];
+        [self.player setShuffleMode:MPMusicShuffleModeSongs];
         //NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
         //[self.songArrayForCollectionView addObject:songTitle];
         //[storeArray addObject:songTitle];
@@ -195,6 +197,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    //default apple code https://developer.apple.com/Library/ios/documentation/Audio/Conceptual/iPodLibraryAccess_Guide/UsingMediaPlayback/UsingMediaPlayback.html
+    [[NSNotificationCenter defaultCenter]
+     removeObserver: self
+     name:           MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+     object:         self.player];
+    
+    [[NSNotificationCenter defaultCenter]
+     removeObserver: self
+     name:           MPMusicPlayerControllerPlaybackStateDidChangeNotification
+     object:         self.player];
+    
+    [self.player endGeneratingPlaybackNotifications];
+
+}
+
 //lazy instantiations
 -(long long)points
 {
@@ -216,12 +237,12 @@
 - (void) handle_NowPlayingItemChanged: (NSNotification *)notification {
     //song change
     //reload things
-    
+    self.points -= 2;
     [self updateUI];
 }
 
 - (void) handle_PlaybackStateChanged: (NSNotification *) notification {
-    
+    self.points -= 1;
 }
 
 #pragma mark - UICollectionView
