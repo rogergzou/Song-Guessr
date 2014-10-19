@@ -109,6 +109,7 @@
     
     //set wrong buttons randomly of choices
     for (int i = 0; i < 3; i++) {
+        NSLog(@"%d", rand());
         int index = rand() % [albums count];
         MPMediaItemCollection *album = albums[index];
         NSArray *songs = [album items];
@@ -129,14 +130,17 @@
     self.correctIndex = rand() % 4; //CHANGE LATER. hardcoding in 4.
     //[self.songArrayForCollectionView insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
     if (!self.player.nowPlayingItem) {
-        int index = rand() % [albums count];
-        MPMediaItemCollection *album = albums[index];
-        NSArray *songs = [album items];
-        index = rand() % [songs count];
-        MPMediaItem *song = songs[index];
-        self.player.nowPlayingItem = song;
+        //int index = rand() % [albums count];
+        //MPMediaItemCollection *album = albums[index];
+        //NSArray *songs = [album items];
+        //index = rand() % [songs count];
+        //MPMediaItem *song = songs[index];NSLog(@"hi %@ now play;; %@ song; %@ songtitle, %@ songs;\n\n", self.player.nowPlayingItem, song, song.title, songs);
+        //self.player.nowPlayingItem = song;
+        [self.player setQueueWithQuery:query];
+        //NSLog(@"hi %@ now play;; %@ song; %@ songtitle, %@ songs;", self.player.nowPlayingItem, song, song.title, songs);
         [self.player play];
         [self.player setShuffleMode:MPMusicShuffleModeSongs];
+        
         //NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
         //[self.songArrayForCollectionView addObject:songTitle];
         //[storeArray addObject:songTitle];
@@ -237,12 +241,12 @@
 - (void) handle_NowPlayingItemChanged: (NSNotification *)notification {
     //song change
     //reload things
-    self.points -= 2;
+    //self.points -= 2;
     [self updateUI];
 }
 
 - (void) handle_PlaybackStateChanged: (NSNotification *) notification {
-    self.points -= 1;
+    //self.points -= 1;
 }
 
 #pragma mark - UICollectionView
