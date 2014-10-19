@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DBC2565719F336EA00AF6511 /* FourCountCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC2565619F336EA00AF6511 /* FourCountCollectionViewCell.m */; };
+		DBC2565A19F384B200AF6511 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC2565919F384B200AF6511 /* SettingsTableViewController.m */; };
 		DBDB9E6319F2E7BA0046DDC7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDB9E6219F2E7BA0046DDC7 /* main.m */; };
 		DBDB9E6619F2E7BA0046DDC7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDB9E6519F2E7BA0046DDC7 /* AppDelegate.m */; };
 		DBDB9E6919F2E7BA0046DDC7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDB9E6819F2E7BA0046DDC7 /* ViewController.m */; };
@@ -30,6 +31,8 @@
 /* Begin PBXFileReference section */
 		DBC2565519F336EA00AF6511 /* FourCountCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FourCountCollectionViewCell.h; path = ../FourCountCollectionViewCell.h; sourceTree = "<group>"; };
 		DBC2565619F336EA00AF6511 /* FourCountCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FourCountCollectionViewCell.m; path = ../FourCountCollectionViewCell.m; sourceTree = "<group>"; };
+		DBC2565819F384B200AF6511 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		DBC2565919F384B200AF6511 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		DBDB9E5D19F2E7BA0046DDC7 /* Song Guessr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Song Guessr.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDB9E6119F2E7BA0046DDC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBDB9E6219F2E7BA0046DDC7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 				DBDB9E6819F2E7BA0046DDC7 /* ViewController.m */,
 				DBC2565519F336EA00AF6511 /* FourCountCollectionViewCell.h */,
 				DBC2565619F336EA00AF6511 /* FourCountCollectionViewCell.m */,
+				DBC2565819F384B200AF6511 /* SettingsTableViewController.h */,
+				DBC2565919F384B200AF6511 /* SettingsTableViewController.m */,
 				DBDB9E6A19F2E7BA0046DDC7 /* Main.storyboard */,
 				DBDB9E6D19F2E7BA0046DDC7 /* Images.xcassets */,
 				DBDB9E6F19F2E7BA0046DDC7 /* LaunchScreen.xib */,
@@ -227,6 +232,7 @@
 			files = (
 				DBC2565719F336EA00AF6511 /* FourCountCollectionViewCell.m in Sources */,
 				DBDB9E6919F2E7BA0046DDC7 /* ViewController.m in Sources */,
+				DBC2565A19F384B200AF6511 /* SettingsTableViewController.m in Sources */,
 				DBDB9E6619F2E7BA0046DDC7 /* AppDelegate.m in Sources */,
 				DBDB9E6319F2E7BA0046DDC7 /* main.m in Sources */,
 			);

@@ -76,61 +76,42 @@
         artist = @"";
     else
         [query addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyAlbumArtist]];
-    // Sets the grouping type for the media query
-    //[query setGroupingType: MPMediaGroupingAlbum];
+    // Sets the grouping type for the media query as nothing, which will default it to MPMediaGroupingTitle or something
     
     NSArray *titlesArray = [query collections];
-    //NSLog(@"%@", thesongs);
-    //for (MPMediaItemCollection *title in titles) {
-      //  NSLog(@"%@ tit, and index %@\n", title, [title items]);
-    //}
-    
-    //NSArray *albums;
-    /*
-    int hold = 0;
-    for (MPMediaItemCollection *album in albums) {
-        NSUInteger g = [album count];
-        for (int i = 0; i < g; i++) {
-            hold++;
-            if (hold >= 4)
-                break;
-        }
-    }*/
+
     if ([titlesArray count] < 4 && artist) {
         //not enough songs in albums, set random others
         //later change so it gets some from album + random others
         [query removeFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyArtist]];
         query = [[MPMediaQuery alloc]init];
-        //[query setGroupingType:MPMediaGroupingAlbum];
         titlesArray = [query collections];
         if (![titlesArray count])
             NSLog(@"no music found...");
     }
-    
+    NSLog(@"ufw");
     //set wrong buttons randomly of choices
     for (int i = 0; i < 3; i++) {
         int index = rand() % [titlesArray count];
         MPMediaItemCollection *tar = titlesArray[index];
         NSArray *songs = [tar items];
-        //index = rand() % [songs count];
         //cuz how it's set up, MPMediaGroupingTitle, only 1 element will be the song
         MPMediaItem *song = songs[0];
+        NSLog(@"reached %@", song);
+        //already contains the song in the available choices
         if ([storeArray containsObject:song] || [self.player.nowPlayingItem.title isEqualToString:song.title])
             i--;
         else
             [storeArray addObject:song];
         }
     
-        //NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
-        //already contains the song in the available choices
-        
-    
     //get insert right one
     [storeArray insertObject:self.player.nowPlayingItem atIndex:self.correctIndex];
     self.songArrayForCollectionView = storeArray;
-    
+    NSLog(@"should work %@", storeArray);
     //update rest of UI
     [self.collectionView reloadData];
+    NSLog(@"updated");
     [self updateLabels];
 
     /*
@@ -163,7 +144,7 @@
         self.points+=4;
     } else {
         self.misses++;
-        self.points-=2;
+        self.points-=3;
     }
     //wait 1 sec
     //insert reward animations here
@@ -226,6 +207,7 @@
     //song change
     //reload things
     [self updateUI];
+    NSLog(@"???");
 }
 
 - (void) handle_PlaybackStateChanged: (NSNotification *) notification {
@@ -241,7 +223,7 @@
         FourCountCollectionViewCell *fourCell = (FourCountCollectionViewCell *)cell;
         MPMediaItem *song = self.songArrayForCollectionView[indexPath.item];
         fourCell.songTitle.text = song.title;
-        if (song.artwork) {
+        if (song.artwork && [[NSUserDefaults standardUserDefaults]boolForKey:@"artwork"]) {
             fourCell.backgroundView = [[UIImageView alloc]initWithImage: [song.artwork imageWithSize:fourCell.frame.size]];
             fourCell.songTitle.textColor = [UIColor whiteColor];
             fourCell.songTitle.shadowColor = [UIColor blackColor];
@@ -279,6 +261,13 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self.collectionView performBatchUpdates:nil completion:nil];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [self saveVars];
 }
 
 @end
