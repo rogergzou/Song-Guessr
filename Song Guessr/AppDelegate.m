@@ -24,7 +24,7 @@
         if ([[theVC topViewController] isKindOfClass:[ViewController class]]) {
             ViewController *realVC = (ViewController *)theVC.topViewController;
             [realVC loadVars];
-            NSLog(@"loaded");
+            //NSLog(@"loaded");
         }
     }
     return YES;
@@ -44,7 +44,7 @@
         if ([[theVC topViewController] isKindOfClass:[ViewController class]]) {
             ViewController *realVC = (ViewController *)theVC.topViewController;
             [realVC saveVars];
-            NSLog(@"sav");
+            //NSLog(@"sav");
         }
     }
 }
@@ -57,7 +57,7 @@
         if ([[theVC topViewController] isKindOfClass:[ViewController class]]) {
             ViewController *realVC = (ViewController *)theVC.topViewController;
             [realVC loadVars];
-            NSLog(@"loaded");
+            //NSLog(@"loaded");
         }
     }
 }

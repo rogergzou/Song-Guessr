@@ -12,7 +12,6 @@
 
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-//@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *choices;
 @property (nonatomic, strong) MPMusicPlayerController *player;
 @property (nonatomic) int correctIndex;
 @property (nonatomic, strong) NSMutableArray *songArrayForCollectionView;
@@ -31,11 +30,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.player = [MPMusicPlayerController systemMusicPlayer];
-    if (!self.player.nowPlayingItem) {
-        //nil
-        //[self.player play];
-        //handled in updateUI
-    }
+
     //set listen to notifs. default apple code https://developer.apple.com/Library/ios/documentation/Audio/Conceptual/iPodLibraryAccess_Guide/UsingMediaPlayback/UsingMediaPlayback.html
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
@@ -53,28 +48,17 @@
     
     [self.player beginGeneratingPlaybackNotifications];
     
-    //self.mybutt.titleLabel.text = @"blah";
     [self updateUI];
 }
 
 
 - (void)updateUI {
 
-    //for (UIButton *button in self.choices) {
-        //button.titleLabel.text = self.player.nowPlayingItem.title;
-        //[button setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
-    //}
-    
-    //best way
     //get wrong titles into array (add obj)
     //insert correct title/song name into array at random index
-    //use that array for collectionview datasource
-    
-    
-    //set correct choice randomly, then remove from choices
     
     NSMutableArray *storeArray = [NSMutableArray array];
-    //set incorrect choices by artist or randomly. filter
+    //set incorrect choices by artist or randomly. set query
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     
     self.correctIndex = rand() % 4; //CHANGE LATER.
@@ -86,28 +70,19 @@
         [self.player setShuffleMode:MPMusicShuffleModeSongs];
     }
     
+    //set filter based on artist
     NSString *artist = self.player.nowPlayingItem.artist;
     if (!artist)
         artist = @"";
-    //NSString *songname = self.player.nowPlayingItem.title;
-    //if (!songname)
-    //    songname = @"";
-    //else
-    //    songname = [songname substringToIndex:1];
-    //[query addFilterPredicate: [MPMediaPropertyPredicate
-      //                          predicateWithValue: artist
-        //                        forProperty: MPMediaItemPropertyArtist]];
     else
         [query addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyAlbumArtist]];
     // Sets the grouping type for the media query
     [query setGroupingType: MPMediaGroupingAlbum];
     
-    
     NSArray *albums = [query collections];
     int hold = 0;
     for (MPMediaItemCollection *album in albums) {
         NSUInteger g = [album count];
-        //for (MPMediaItem *song in album) {
         for (int i = 0; i < g; i++) {
             hold++;
             if (hold >= 4)
@@ -130,29 +105,24 @@
         NSArray *songs = [album items];
         index = rand() % [songs count];
         MPMediaItem *song = songs[index];
-        NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
-        //already contains the song in the available choices
-        if ([storeArray containsObject:songTitle] || [self.player.nowPlayingItem.title isEqualToString:songTitle])
+        if ([storeArray containsObject:song] || [self.player.nowPlayingItem.title isEqualToString:song.title])
             i--;
         else
-            [storeArray addObject:songTitle];
-        //[tmpButtonHolder[i] setTitle:songTitle forState:UIControlStateNormal];
-    }
+            [storeArray addObject:song];
+        }
+    
+        //NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
+        //already contains the song in the available choices
+        
     
     //get insert right one
-    
-    //moved to end
-    
-    //NSMutableArray *tmpButtonHolder = [NSMutableArray arrayWithArray:self.choices];
-    
-    
-    
-    [storeArray insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
+    [storeArray insertObject:self.player.nowPlayingItem atIndex:self.correctIndex];
     self.songArrayForCollectionView = storeArray;
-     //UIButton *correctbutton = tmpButtonHolder[self.correctIndex];
-     //[tmpButtonHolder removeObjectAtIndex:self.correctIndex];
-     //[correctbutton setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
     
+    //update rest of UI
+    [self.collectionView reloadData];
+    [self updateLabels];
+
     /*
     for (MPMediaItemCollection *album in albums) {
         MPMediaItem *representativeItem = [album representativeItem];
@@ -169,12 +139,6 @@
             NSLog (@"\t\t%@", songTitle);
         }
     }*/
-
-    [self.collectionView reloadData];
-    
-    //update labels
-    [self updateLabels];
-
 }
 - (void)updateLabels {
     self.hitsLabel.text = [NSString stringWithFormat:@"Hits: %llu", self.hits];
@@ -192,6 +156,7 @@
         self.points-=2;
     }
     //wait 1 sec
+    //insert reward animations here
     
     //next song
     [self.player skipToNextItem];
@@ -250,12 +215,11 @@
 - (void) handle_NowPlayingItemChanged: (NSNotification *)notification {
     //song change
     //reload things
-    //self.points -= 2;
     [self updateUI];
 }
 
 - (void) handle_PlaybackStateChanged: (NSNotification *) notification {
-    //self.points -= 1;
+
 }
 
 #pragma mark - UICollectionView
@@ -265,22 +229,24 @@
     if ([cell isKindOfClass:[FourCountCollectionViewCell class]]) {
         //set title as what's stored in songArray
         FourCountCollectionViewCell *fourCell = (FourCountCollectionViewCell *)cell;
-        //[fourCell.button setTitle:self.songArrayForCollectionView[indexPath.item] forState:UIControlStateNormal];
-        fourCell.songTitle.text = self.songArrayForCollectionView[indexPath.item];
-        //NSLog(@"%@, index %ld", fourCell.songTitle.text, (long)indexPath.item);
-        
-        //CGFloat half = collectionView.frame.size.width/2 - collectionView.layoutMargins.left - collectionView.layoutMargins.right - 1;
-        //fourCell.frame = CGRectMake(0, 0, half, half);
-        
-        //[fourCell updateConstraintsIfNeeded];
-        
+        MPMediaItem *song = self.songArrayForCollectionView[indexPath.item];
+        fourCell.songTitle.text = song.title;
+        if (song.artwork) {
+            fourCell.backgroundView = [[UIImageView alloc]initWithImage: [song.artwork imageWithSize:fourCell.frame.size]];
+            fourCell.songTitle.textColor = [UIColor whiteColor];
+            fourCell.songTitle.shadowColor = [UIColor blackColor];
+            //fourCell.songTitle.shadowOffset = 1;
+        } else {
+            fourCell.backgroundView = nil;
+            fourCell.songTitle.textColor = [UIColor blackColor];
+            fourCell.songTitle.shadowColor = [UIColor clearColor];
+        }
         return fourCell;
     }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //use choiceSelected:
     [self choiceSelected:indexPath.item];
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -297,9 +263,7 @@
     if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return CGSizeMake(half/2, half/2);
     }
-    return CGSizeMake(half+3, half+3); //lol
-    
-    return CGSizeMake(0, 0);
+    return CGSizeMake(half+3, half+3); //lol sizing so exact
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation

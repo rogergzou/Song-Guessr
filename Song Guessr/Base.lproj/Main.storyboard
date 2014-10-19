@@ -52,14 +52,16 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6D-Hu-dEh">
                                                     <rect key="frame" x="8" y="8" width="51" height="46"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <size key="shadowOffset" width="-1" height="-1"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="0.35592192071031614" green="1" blue="0.46195724807138072" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.38399750654973391" green="0.44718503982559726" blue="0.7699497767857143" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottomMargin" secondItem="e6D-Hu-dEh" secondAttribute="bottom" id="5a6-6r-wjz"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="e6D-Hu-dEh" secondAttribute="trailing" id="CxH-iH-34n"/>
