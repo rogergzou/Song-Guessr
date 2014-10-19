@@ -214,7 +214,7 @@
     if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return CGSizeMake(half/2, half/2);
     }
-    return CGSizeMake(half, half);
+    return CGSizeMake(half+3, half+3); //lol
     
     return CGSizeMake(0, 0);
 }
