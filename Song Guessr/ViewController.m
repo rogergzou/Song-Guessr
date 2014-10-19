@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hitsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *missesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *plusPoints;
+
 
 @end
 
@@ -47,7 +49,8 @@
      object:      self.player];
     
     [self.player beginGeneratingPlaybackNotifications];
-    
+    if (self.player.nowPlayingItem && self.player.playbackState == MPMusicPlaybackStatePlaying)
+        [self.player play];
     [self updateUI];
 }
 
@@ -89,7 +92,6 @@
         if (![titlesArray count])
             NSLog(@"no music found...");
     }
-    NSLog(@"ufw");
     //set wrong buttons randomly of choices
     for (int i = 0; i < 3; i++) {
         int index = rand() % [titlesArray count];
@@ -97,7 +99,6 @@
         NSArray *songs = [tar items];
         //cuz how it's set up, MPMediaGroupingTitle, only 1 element will be the song
         MPMediaItem *song = songs[0];
-        NSLog(@"reached %@", song);
         //already contains the song in the available choices
         if ([storeArray containsObject:song] || [self.player.nowPlayingItem.title isEqualToString:song.title])
             i--;
@@ -108,10 +109,8 @@
     //get insert right one
     [storeArray insertObject:self.player.nowPlayingItem atIndex:self.correctIndex];
     self.songArrayForCollectionView = storeArray;
-    NSLog(@"should work %@", storeArray);
     //update rest of UI
     [self.collectionView reloadData];
-    NSLog(@"updated");
     [self updateLabels];
 
     /*
@@ -142,10 +141,20 @@
     if (index == self.correctIndex) {
         self.hits++;
         self.points+=4;
+        self.plusPoints.textColor = [UIColor greenColor];
+        self.plusPoints.text = @"+4";
     } else {
         self.misses++;
         self.points-=3;
+        self.plusPoints.textColor = [UIColor redColor];
+        self.plusPoints.text = @"-3";
     }
+    self.plusPoints.alpha = 1;
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{ self.plusPoints.alpha = 0;} completion:^(BOOL finished){
+        if (finished) {
+            self.plusPoints.text = @"";
+        }
+    }];
     //wait 1 sec
     //insert reward animations here
     
@@ -207,7 +216,6 @@
     //song change
     //reload things
     [self updateUI];
-    NSLog(@"???");
 }
 
 - (void) handle_PlaybackStateChanged: (NSNotification *) notification {

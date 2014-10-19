@@ -78,7 +78,7 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="D8P-bk-8Lj"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I65-Wi-LiM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Points: 555" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I65-Wi-LiM">
                                 <rect key="frame" x="16" y="541" width="244" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -102,6 +102,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="+1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OL3-N6-glL">
+                                <rect key="frame" x="99" y="529" width="20" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.0018857736167041028" green="0.91177056760204078" blue="0.0029258147290581299" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -110,6 +116,7 @@
                             <constraint firstItem="JmY-O5-e39" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="NXC-Cf-KyL"/>
                             <constraint firstItem="JmY-O5-e39" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="TmN-cb-uPX"/>
                             <constraint firstItem="hO0-RS-Kue" firstAttribute="leading" secondItem="TTe-eM-Uur" secondAttribute="leading" id="VUd-bt-ImQ"/>
+                            <constraint firstItem="I65-Wi-LiM" firstAttribute="top" secondItem="OL3-N6-glL" secondAttribute="bottom" constant="-9" id="ckU-tD-udc"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="TTe-eM-Uur" secondAttribute="bottom" constant="10" id="jjI-7F-j6r"/>
                             <constraint firstItem="hO0-RS-Kue" firstAttribute="leading" secondItem="Qum-uc-qJg" secondAttribute="leading" constant="1" id="lIn-vO-SFv"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="JmY-O5-e39" secondAttribute="bottom" constant="67" id="nzf-sd-j7A"/>
@@ -129,6 +136,7 @@
                         <outlet property="collectionView" destination="JmY-O5-e39" id="v5D-NK-gX2"/>
                         <outlet property="hitsLabel" destination="hO0-RS-Kue" id="tAg-1X-K8V"/>
                         <outlet property="missesLabel" destination="TTe-eM-Uur" id="thw-yc-zR1"/>
+                        <outlet property="plusPoints" destination="OL3-N6-glL" id="Iyd-d0-Duc"/>
                         <outlet property="pointsLabel" destination="I65-Wi-LiM" id="zuf-vA-IkQ"/>
                     </connections>
                 </viewController>
