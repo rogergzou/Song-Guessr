@@ -27,7 +27,10 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.player = [MPMusicPlayerController systemMusicPlayer];
-
+    if (!self.player.nowPlayingItem) {
+        //nil
+        [self.player play];
+    }
     //set listen to notifs
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
@@ -117,6 +120,19 @@
     
     self.correctIndex = rand() % 4; //CHANGE LATER. hardcoding in 4.
     //[self.songArrayForCollectionView insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
+    if (!self.player.nowPlayingItem) {
+        int index = rand() % [albums count];
+        MPMediaItemCollection *album = albums[index];
+        NSArray *songs = [album items];
+        index = rand() % [songs count];
+        MPMediaItem *song = songs[index];
+        self.player.nowPlayingItem = song;
+        [self.player play];
+        //NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
+        //[self.songArrayForCollectionView addObject:songTitle];
+        //[storeArray addObject:songTitle];
+    }
+    
     [storeArray insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
     self.songArrayForCollectionView = storeArray;
      //UIButton *correctbutton = tmpButtonHolder[self.correctIndex];
