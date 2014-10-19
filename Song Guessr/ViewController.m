@@ -17,9 +17,6 @@
 @property (nonatomic) int correctIndex;
 @property (nonatomic, strong) NSMutableArray *songArrayForCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic) long long points;
-@property (nonatomic) unsigned long long hits;
-@property (nonatomic) unsigned long long misses;
 
 @property (weak, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hitsLabel;
@@ -79,6 +76,16 @@
     NSMutableArray *storeArray = [NSMutableArray array];
     //set incorrect choices by artist or randomly. filter
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
+    
+    self.correctIndex = rand() % 4; //CHANGE LATER.
+    
+    //make sure there is something playing now...
+    if (!self.player.nowPlayingItem) {
+        [self.player setQueueWithQuery:query];
+        [self.player play];
+        [self.player setShuffleMode:MPMusicShuffleModeSongs];
+    }
+    
     NSString *artist = self.player.nowPlayingItem.artist;
     if (!artist)
         artist = @"";
@@ -97,9 +104,18 @@
     
     
     NSArray *albums = [query collections];
-
-    if ([albums count] < 3 && artist) {
-        //not enough things in album, set random others
+    int hold = 0;
+    for (MPMediaItemCollection *album in albums) {
+        NSUInteger g = [album count];
+        //for (MPMediaItem *song in album) {
+        for (int i = 0; i < g; i++) {
+            hold++;
+            if (hold >= 4)
+                break;
+        }
+    }
+    if (hold < 4 && artist) {
+        //not enough songs in albums, set random others
         //later change so it gets some from album + random others
         [query removeFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyArtist]];
         query = [[MPMediaQuery alloc]init];
@@ -109,15 +125,17 @@
     
     //set wrong buttons randomly of choices
     for (int i = 0; i < 3; i++) {
-        NSLog(@"%d", rand());
         int index = rand() % [albums count];
         MPMediaItemCollection *album = albums[index];
         NSArray *songs = [album items];
         index = rand() % [songs count];
         MPMediaItem *song = songs[index];
         NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
-        //[self.songArrayForCollectionView addObject:songTitle];
-        [storeArray addObject:songTitle];
+        //already contains the song in the available choices
+        if ([storeArray containsObject:songTitle] || [self.player.nowPlayingItem.title isEqualToString:songTitle])
+            i--;
+        else
+            [storeArray addObject:songTitle];
         //[tmpButtonHolder[i] setTitle:songTitle forState:UIControlStateNormal];
     }
     
@@ -127,24 +145,7 @@
     
     //NSMutableArray *tmpButtonHolder = [NSMutableArray arrayWithArray:self.choices];
     
-    self.correctIndex = rand() % 4; //CHANGE LATER. hardcoding in 4.
-    //[self.songArrayForCollectionView insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
-    if (!self.player.nowPlayingItem) {
-        //int index = rand() % [albums count];
-        //MPMediaItemCollection *album = albums[index];
-        //NSArray *songs = [album items];
-        //index = rand() % [songs count];
-        //MPMediaItem *song = songs[index];NSLog(@"hi %@ now play;; %@ song; %@ songtitle, %@ songs;\n\n", self.player.nowPlayingItem, song, song.title, songs);
-        //self.player.nowPlayingItem = song;
-        [self.player setQueueWithQuery:query];
-        //NSLog(@"hi %@ now play;; %@ song; %@ songtitle, %@ songs;", self.player.nowPlayingItem, song, song.title, songs);
-        [self.player play];
-        [self.player setShuffleMode:MPMusicShuffleModeSongs];
-        
-        //NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
-        //[self.songArrayForCollectionView addObject:songTitle];
-        //[storeArray addObject:songTitle];
-    }
+    
     
     [storeArray insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
     self.songArrayForCollectionView = storeArray;
@@ -204,7 +205,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
+    NSLog(@"yep triggered");
     //default apple code https://developer.apple.com/Library/ios/documentation/Audio/Conceptual/iPodLibraryAccess_Guide/UsingMediaPlayback/UsingMediaPlayback.html
     [[NSNotificationCenter defaultCenter]
      removeObserver: self
@@ -258,7 +259,7 @@
         FourCountCollectionViewCell *fourCell = (FourCountCollectionViewCell *)cell;
         //[fourCell.button setTitle:self.songArrayForCollectionView[indexPath.item] forState:UIControlStateNormal];
         fourCell.songTitle.text = self.songArrayForCollectionView[indexPath.item];
-        NSLog(@"%@, index %ld", fourCell.songTitle.text, (long)indexPath.item);
+        //NSLog(@"%@, index %ld", fourCell.songTitle.text, (long)indexPath.item);
         
         //CGFloat half = collectionView.frame.size.width/2 - collectionView.layoutMargins.left - collectionView.layoutMargins.right - 1;
         //fourCell.frame = CGRectMake(0, 0, half, half);

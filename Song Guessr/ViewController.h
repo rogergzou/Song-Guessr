@@ -10,6 +10,11 @@
 
 @interface ViewController : UIViewController
 
+@property (nonatomic) long long points;
+@property (nonatomic) unsigned long long hits;
+@property (nonatomic) unsigned long long misses;
+
+-(void)saveVars;
 
 @end
 
