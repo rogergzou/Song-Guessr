@@ -8,12 +8,15 @@
 
 #import "ViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "FourCountCollectionViewCell.h"
 
-@interface ViewController ()
+@interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *choices;
 @property (nonatomic, strong) MPMusicPlayerController *player;
 @property (nonatomic) int correctIndex;
+@property (nonatomic, strong) NSMutableArray *songArrayForCollectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -54,13 +57,15 @@
         //[button setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
     //}
     
-    //set correct choice randomly, then remove from choices
-    NSMutableArray *tmpButtonHolder = [NSMutableArray arrayWithArray:self.choices];
-    self.correctIndex = rand() % 4;
-    UIButton *correctbutton = tmpButtonHolder[self.correctIndex];
-    [tmpButtonHolder removeObjectAtIndex:self.correctIndex];
-    [correctbutton setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
+    //best way
+    //get wrong titles into array (add obj)
+    //insert correct title/song name into array at random index
+    //use that array for collectionview datasource
     
+    
+    //set correct choice randomly, then remove from choices
+    
+    NSMutableArray *storeArray = [NSMutableArray array];
     //set incorrect choices by artist or randomly. filter
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     NSString *artist = self.player.nowPlayingItem.artist;
@@ -99,8 +104,24 @@
         index = rand() % [songs count];
         MPMediaItem *song = songs[index];
         NSString *songTitle = [song valueForProperty:MPMediaItemPropertyTitle];
-        [tmpButtonHolder[i] setTitle:songTitle forState:UIControlStateNormal];
+        //[self.songArrayForCollectionView addObject:songTitle];
+        [storeArray addObject:songTitle];
+        //[tmpButtonHolder[i] setTitle:songTitle forState:UIControlStateNormal];
     }
+    
+    //get insert right one
+    
+    //moved to end
+    
+    //NSMutableArray *tmpButtonHolder = [NSMutableArray arrayWithArray:self.choices];
+    
+    self.correctIndex = rand() % 4; //CHANGE LATER. hardcoding in 4.
+    //[self.songArrayForCollectionView insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
+    [storeArray insertObject:self.player.nowPlayingItem.title atIndex:self.correctIndex];
+    self.songArrayForCollectionView = storeArray;
+     //UIButton *correctbutton = tmpButtonHolder[self.correctIndex];
+     //[tmpButtonHolder removeObjectAtIndex:self.correctIndex];
+     //[correctbutton setTitle:self.player.nowPlayingItem.title forState:UIControlStateNormal];
     
     /*
     for (MPMediaItemCollection *album in albums) {
@@ -119,9 +140,10 @@
         }
     }*/
 
+    [self.collectionView reloadData];
 }
 
-- (IBAction)choiceSelected:(UIButton *)sender {
+- (IBAction)choiceSelected:(id)sender {
     //check if correct choice. If so say so
     
     //wait 1 sec
@@ -152,5 +174,30 @@
     
 }
 
+#pragma mark - UICollectionView
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"fourCell" forIndexPath:indexPath];
+    if ([cell isKindOfClass:[FourCountCollectionViewCell class]]) {
+        //set title as what's stored in songArray
+        FourCountCollectionViewCell *fourCell = (FourCountCollectionViewCell *)cell;
+        //[fourCell.button setTitle:self.songArrayForCollectionView[indexPath.item] forState:UIControlStateNormal];
+        fourCell.songTitle.text = self.songArrayForCollectionView[indexPath.item];
+        NSLog(@"%@, index %ld", fourCell.songTitle.text, (long)indexPath.item);
+        [fourCell updateConstraintsIfNeeded];
+        return fourCell;
+    }
+    return cell;
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //use choiceSelected:
+    NSLog(@"%@", indexPath);
+    [self choiceSelected:indexPath];
+}
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 4;
+}
 
 @end
