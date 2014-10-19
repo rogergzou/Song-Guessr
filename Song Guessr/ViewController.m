@@ -77,9 +77,16 @@
     else
         [query addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyAlbumArtist]];
     // Sets the grouping type for the media query
-    [query setGroupingType: MPMediaGroupingAlbum];
+    //[query setGroupingType: MPMediaGroupingAlbum];
     
-    NSArray *albums = [query collections];
+    NSArray *titlesArray = [query collections];
+    //NSLog(@"%@", thesongs);
+    //for (MPMediaItemCollection *title in titles) {
+      //  NSLog(@"%@ tit, and index %@\n", title, [title items]);
+    //}
+    
+    //NSArray *albums;
+    /*
     int hold = 0;
     for (MPMediaItemCollection *album in albums) {
         NSUInteger g = [album count];
@@ -88,23 +95,26 @@
             if (hold >= 4)
                 break;
         }
-    }
-    if (hold < 4 && artist) {
+    }*/
+    if ([titlesArray count] < 4 && artist) {
         //not enough songs in albums, set random others
         //later change so it gets some from album + random others
         [query removeFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:artist forProperty:MPMediaItemPropertyArtist]];
         query = [[MPMediaQuery alloc]init];
-        [query setGroupingType:MPMediaGroupingAlbum];
-        albums = [query collections];
+        //[query setGroupingType:MPMediaGroupingAlbum];
+        titlesArray = [query collections];
+        if (![titlesArray count])
+            NSLog(@"no music found...");
     }
     
     //set wrong buttons randomly of choices
     for (int i = 0; i < 3; i++) {
-        int index = rand() % [albums count];
-        MPMediaItemCollection *album = albums[index];
-        NSArray *songs = [album items];
-        index = rand() % [songs count];
-        MPMediaItem *song = songs[index];
+        int index = rand() % [titlesArray count];
+        MPMediaItemCollection *tar = titlesArray[index];
+        NSArray *songs = [tar items];
+        //index = rand() % [songs count];
+        //cuz how it's set up, MPMediaGroupingTitle, only 1 element will be the song
+        MPMediaItem *song = songs[0];
         if ([storeArray containsObject:song] || [self.player.nowPlayingItem.title isEqualToString:song.title])
             i--;
         else
