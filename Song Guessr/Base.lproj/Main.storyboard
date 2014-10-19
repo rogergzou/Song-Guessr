@@ -77,19 +77,19 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I65-Wi-LiM">
-                                <rect key="frame" x="16" y="541" width="186" height="21"/>
+                                <rect key="frame" x="16" y="541" width="244" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hits:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hO0-RS-Kue">
-                                <rect key="frame" x="305" y="540" width="115" height="21"/>
+                                <rect key="frame" x="305" y="540" width="199" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Misses:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTe-eM-Uur">
-                                <rect key="frame" x="305" y="569" width="59" height="21"/>
+                                <rect key="frame" x="305" y="569" width="199" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -121,6 +121,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="JmY-O5-e39" id="v5D-NK-gX2"/>
+                        <outlet property="hitsLabel" destination="hO0-RS-Kue" id="tAg-1X-K8V"/>
+                        <outlet property="missesLabel" destination="TTe-eM-Uur" id="thw-yc-zR1"/>
+                        <outlet property="pointsLabel" destination="I65-Wi-LiM" id="zuf-vA-IkQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

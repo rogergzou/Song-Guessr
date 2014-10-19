@@ -17,6 +17,13 @@
 @property (nonatomic) int correctIndex;
 @property (nonatomic, strong) NSMutableArray *songArrayForCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) long long points;
+@property (nonatomic) unsigned long long hits;
+@property (nonatomic) unsigned long long misses;
+
+@property (weak, nonatomic) IBOutlet UILabel *pointsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *hitsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *missesLabel;
 
 @end
 
@@ -157,11 +164,22 @@
     }*/
 
     [self.collectionView reloadData];
+    
+    //update labels
+    self.hitsLabel.text = [NSString stringWithFormat:@"Hits: %llu", self.hits];
+    self.missesLabel.text = [NSString stringWithFormat:@"Misses: %llu", self.misses];
+    self.pointsLabel.text = [NSString stringWithFormat:@"Points: %lli", self.points];
 }
 
-- (IBAction)choiceSelected:(id)sender {
+- (void)choiceSelected:(NSInteger)index {
     //check if correct choice. If so say so
-    
+    if (index == self.correctIndex) {
+        self.hits++;
+        self.points+=4;
+    } else {
+        self.misses++;
+        self.points-=2;
+    }
     //wait 1 sec
     
     //next song
@@ -177,6 +195,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+//lazy instantiations
+-(long long)points
+{
+    if (!_points) _points = 0;
+    return _points;
+}
+- (unsigned long long)hits
+{
+    if (!_hits) _hits = 0;
+    return _hits;
+}
+- (unsigned long long)misses
+{
+    if (!_misses) _misses = 0;
+    return _misses;
+}
 
 #pragma mark - Handling Changes to Playing
 - (void) handle_NowPlayingItemChanged: (NSNotification *)notification {
@@ -214,7 +248,7 @@
 {
     //use choiceSelected:
     NSLog(@"%@", indexPath);
-    [self choiceSelected:indexPath];
+    [self choiceSelected:indexPath.item];
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
